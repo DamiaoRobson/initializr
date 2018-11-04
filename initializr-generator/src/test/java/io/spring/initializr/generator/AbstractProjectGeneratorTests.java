@@ -109,12 +109,12 @@ public abstract class AbstractProjectGeneratorTests {
 				.setMetadataProvider(new SimpleInitializrMetadataProvider(metadata));
 	}
 
-	protected void verifyProjectSuccessfulEventFor(ProjectRequest request) {
+	protected void verifyProjectSuccessfulEventFor(ProjectRequestSuperClass request) {
 		verify(this.eventPublisher, times(1))
 				.publishEvent(argThat(new ProjectGeneratedEventMatcher(request)));
 	}
 
-	protected void verifyProjectFailedEventFor(ProjectRequest request, Exception ex) {
+	protected void verifyProjectFailedEventFor(ProjectRequestSuperClass request, Exception ex) {
 		verify(this.eventPublisher, times(1))
 				.publishEvent(argThat(new ProjectFailedEventMatcher(request, ex)));
 	}
@@ -122,9 +122,9 @@ public abstract class AbstractProjectGeneratorTests {
 	protected static class ProjectGeneratedEventMatcher
 			implements ArgumentMatcher<ProjectGeneratedEvent> {
 
-		private final ProjectRequest request;
+		private final ProjectRequestSuperClass request;
 
-		ProjectGeneratedEventMatcher(ProjectRequest request) {
+		ProjectGeneratedEventMatcher(ProjectRequestSuperClass request) {
 			this.request = request;
 		}
 
@@ -138,11 +138,11 @@ public abstract class AbstractProjectGeneratorTests {
 	private static class ProjectFailedEventMatcher
 			implements ArgumentMatcher<ProjectFailedEvent> {
 
-		private final ProjectRequest request;
+		private final ProjectRequestSuperClass request;
 
 		private final Exception cause;
 
-		ProjectFailedEventMatcher(ProjectRequest request, Exception cause) {
+		ProjectFailedEventMatcher(ProjectRequestSuperClass request, Exception cause) {
 			this.request = request;
 			this.cause = cause;
 		}

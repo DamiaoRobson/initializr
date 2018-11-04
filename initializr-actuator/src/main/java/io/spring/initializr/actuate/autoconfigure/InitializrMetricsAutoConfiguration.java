@@ -17,6 +17,7 @@
 package io.spring.initializr.actuate.autoconfigure;
 
 import io.micrometer.core.instrument.MeterRegistry;
+import io.spring.initializr.actuate.metric.ProjectGenerationMetriListSuperClass;
 import io.spring.initializr.actuate.metric.ProjectGenerationMetricsListener;
 
 import org.springframework.boot.actuate.autoconfigure.metrics.CompositeMeterRegistryAutoConfiguration;
@@ -39,7 +40,7 @@ public class InitializrMetricsAutoConfiguration {
 
 	@Bean
 	@ConditionalOnSingleCandidate(MeterRegistry.class)
-	public ProjectGenerationMetricsListener metricsListener(MeterRegistry meterRegistry) {
+	public ProjectGenerationMetriListSuperClass metricsListener(MeterRegistry meterRegistry) {
 		return new ProjectGenerationMetricsListener(meterRegistry);
 	}
 

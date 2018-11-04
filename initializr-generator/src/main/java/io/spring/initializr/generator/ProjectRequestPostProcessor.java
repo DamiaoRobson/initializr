@@ -38,7 +38,7 @@ public interface ProjectRequestPostProcessor {
 	 * @param metadata the metadata to use to resolve this request
 	 * @see ProjectRequest#resolve(InitializrMetadata)
 	 */
-	default void postProcessBeforeResolution(ProjectRequest request,
+	default void postProcessBeforeResolution(ProjectRequestSuperClass request,
 			InitializrMetadata metadata) {
 	}
 

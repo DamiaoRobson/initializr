@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import io.spring.initializr.generator.ProjectRequest;
+import io.spring.initializr.generator.ProjectRequestSuperClass;
 import io.spring.initializr.metadata.BillOfMaterials;
 import io.spring.initializr.metadata.Dependency;
 import io.spring.initializr.metadata.InitializrConfiguration.Env.Maven.ParentPom;
@@ -84,7 +84,7 @@ public class PomAssert {
 	 * @param request the source request
 	 * @return a POM assert
 	 */
-	public PomAssert validateProjectRequest(ProjectRequest request) {
+	public PomAssert validateProjectRequest(ProjectRequestSuperClass request) {
 		return hasGroupId(request.getGroupId()).hasArtifactId(request.getArtifactId())
 				.hasVersion(request.getVersion()).hasPackaging(request.getPackaging())
 				.hasName(request.getName()).hasDescription(request.getDescription())

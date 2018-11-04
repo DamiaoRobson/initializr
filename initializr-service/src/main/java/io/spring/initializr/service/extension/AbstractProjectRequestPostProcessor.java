@@ -18,6 +18,7 @@ package io.spring.initializr.service.extension;
 
 import io.spring.initializr.generator.ProjectRequest;
 import io.spring.initializr.generator.ProjectRequestPostProcessor;
+import io.spring.initializr.generator.ProjectRequestSuperClass;
 import io.spring.initializr.metadata.Dependency;
 import io.spring.initializr.util.Version;
 
@@ -76,7 +77,7 @@ public class AbstractProjectRequestPostProcessor implements ProjectRequestPostPr
 	 * @return {@code true} if the requested version is equal or higher than the specified
 	 * {@code version}
 	 */
-	protected boolean isSpringBootVersionAtLeastAfter(ProjectRequest request,
+	protected boolean isSpringBootVersionAtLeastAfter(ProjectRequestSuperClass request,
 			Version version) {
 		Version requestVersion = Version.safeParse(request.getBootVersion());
 		return version.compareTo(requestVersion) <= 0;

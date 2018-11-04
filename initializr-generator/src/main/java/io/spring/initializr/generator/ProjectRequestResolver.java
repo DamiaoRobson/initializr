@@ -44,7 +44,7 @@ public class ProjectRequestResolver {
 		return request;
 	}
 
-	private void applyPostProcessBeforeResolution(ProjectRequest request,
+	private void applyPostProcessBeforeResolution(ProjectRequestSuperClass request,
 			InitializrMetadata metadata) {
 		for (ProjectRequestPostProcessor processor : this.postProcessors) {
 			processor.postProcessBeforeResolution(request, metadata);

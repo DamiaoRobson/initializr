@@ -204,7 +204,7 @@ public class MainControllerIntegrationTests
 	public void metadataWithHalAcceptHeader() {
 		ResponseEntity<String> response = invokeHome(null, "application/hal+json");
 		assertThat(response.getHeaders().getFirst(HttpHeaders.ETAG)).isNotNull();
-		validateContentType(response, MainController.HAL_JSON_CONTENT_TYPE);
+		validateContentType(response, MainControllerSuperClass2.HAL_JSON_CONTENT_TYPE);
 		validateCurrentMetadata(response.getBody());
 	}
 

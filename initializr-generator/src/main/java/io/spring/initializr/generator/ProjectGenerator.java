@@ -507,7 +507,7 @@ public class ProjectGenerator {
 		return property.toStandardFormat();
 	}
 
-	protected void setupApplicationModel(ProjectRequest request,
+	protected void setupApplicationModel(ProjectRequestSuperClass request,
 			Map<String, Object> model) {
 		Imports imports = new Imports(request.getLanguage());
 		Annotations annotations = new Annotations();
@@ -550,7 +550,7 @@ public class ProjectGenerator {
 				testAnnotations.withFinalCarriageReturn().toString());
 	}
 
-	protected String getServletInitializrClass(ProjectRequest request) {
+	protected String getServletInitializrClass(ProjectRequestSuperClass request) {
 		Version bootVersion = Version.safeParse(request.getBootVersion());
 		if (VERSION_1_4_0_M3.compareTo(bootVersion) > 0) {
 			return "org.springframework.boot.context.web.SpringBootServletInitializer";
@@ -563,7 +563,7 @@ public class ProjectGenerator {
 		}
 	}
 
-	protected String getKotlinStdlibArtifactId(ProjectRequest request) {
+	protected String getKotlinStdlibArtifactId(ProjectRequestSuperClass request) {
 		String javaVersion = request.getJavaVersion();
 		if ("1.6".equals(javaVersion)) {
 			return "kotlin-stdlib";
@@ -574,7 +574,7 @@ public class ProjectGenerator {
 		return "kotlin-stdlib-jdk8";
 	}
 
-	private static boolean isJava8OrLater(ProjectRequest request) {
+	private static boolean isJava8OrLater(ProjectRequestSuperClass request) {
 		return !request.getJavaVersion().equals("1.6")
 				&& !request.getJavaVersion().equals("1.7");
 	}
@@ -587,11 +587,11 @@ public class ProjectGenerator {
 		return "maven".equals(request.getBuild());
 	}
 
-	private static boolean isWar(ProjectRequest request) {
+	private static boolean isWar(ProjectRequestSuperClass request) {
 		return "war".equals(request.getPackaging());
 	}
 
-	private static boolean isNewTestInfrastructureAvailable(ProjectRequest request) {
+	private static boolean isNewTestInfrastructureAvailable(ProjectRequestSuperClass request) {
 		return VERSION_1_4_0_M2
 				.compareTo(Version.safeParse(request.getBootVersion())) <= 0;
 	}
@@ -664,7 +664,7 @@ public class ProjectGenerator {
 		return target;
 	}
 
-	private File initializerProjectDir(File rootDir, ProjectRequest request) {
+	private File initializerProjectDir(File rootDir, ProjectRequestSuperClass request) {
 		if (request.getBaseDir() != null) {
 			File dir = new File(rootDir, request.getBaseDir());
 			dir.mkdirs();

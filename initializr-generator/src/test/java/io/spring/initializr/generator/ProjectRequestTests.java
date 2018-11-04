@@ -46,14 +46,14 @@ public class ProjectRequestTests {
 		this.metadata = InitializrMetadataBuilder.create().build();
 		this.metadata.getGroupId().setContent("org.acme");
 		this.metadata.getArtifactId().setContent("my-project");
-		ProjectRequest request = initProjectRequest();
+		ProjectRequestSuperClass request = initProjectRequest();
 		assertThat(request.getGroupId()).isEqualTo("org.acme");
 		assertThat(request.getArtifactId()).isEqualTo("my-project");
 	}
 
 	@Test
 	public void initializeSetsMetadataDefaults() {
-		ProjectRequest request = initProjectRequest();
+		ProjectRequestSuperClass request = initProjectRequest();
 		assertThat(request.getName()).isEqualTo(this.metadata.getName().getContent());
 		assertThat(request.getType())
 				.isEqualTo(this.metadata.getTypes().getDefault().getId());

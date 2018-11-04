@@ -35,6 +35,7 @@ import io.spring.initializr.metadata.InitializrMetadataProvider;
 import io.spring.initializr.metadata.InitializrProperties;
 import io.spring.initializr.util.TemplateRenderer;
 import io.spring.initializr.web.project.MainController;
+import io.spring.initializr.web.project.MainControllerSuperClass2;
 import io.spring.initializr.web.support.DefaultDependencyMetadataProvider;
 import io.spring.initializr.web.support.DefaultInitializrMetadataProvider;
 import io.spring.initializr.web.ui.UiController;
@@ -138,7 +139,7 @@ public class InitializrAutoConfiguration {
 
 		@Bean
 		@ConditionalOnMissingBean
-		public MainController initializrMainController(
+		public MainControllerSuperClass2 initializrMainController(
 				InitializrMetadataProvider metadataProvider,
 				TemplateRenderer templateRenderer,
 				ResourceUrlProvider resourceUrlProvider,

@@ -107,7 +107,7 @@ public class ProjectRequestResolverTests {
 		final Map<String, Object> after = new LinkedHashMap<>();
 
 		@Override
-		public void postProcessBeforeResolution(ProjectRequest request,
+		public void postProcessBeforeResolution(ProjectRequestSuperClass request,
 				InitializrMetadata metadata) {
 			BeanWrapperImpl wrapper = new BeanWrapperImpl(request);
 			this.before.forEach(wrapper::setPropertyValue);

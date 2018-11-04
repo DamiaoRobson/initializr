@@ -16,8 +16,8 @@
 
 package io.spring.initializr.web.project;
 
-import io.spring.initializr.generator.ProjectRequest;
 import io.spring.initializr.generator.ProjectRequestPostProcessor;
+import io.spring.initializr.generator.ProjectRequestSuperClass;
 import io.spring.initializr.metadata.InitializrMetadata;
 import io.spring.initializr.web.AbstractInitializrControllerIntegrationTests;
 import io.spring.initializr.web.project.ProjectGenerationPostProcessorTests.ProjectRequestPostProcessorConfiguration;
@@ -49,7 +49,7 @@ public class ProjectGenerationPostProcessorTests
 		ProjectRequestPostProcessor secondPostProcessor() {
 			return new ProjectRequestPostProcessor() {
 				@Override
-				public void postProcessBeforeResolution(ProjectRequest request,
+				public void postProcessBeforeResolution(ProjectRequestSuperClass request,
 						InitializrMetadata metadata) {
 					request.setJavaVersion("1.7");
 				}
@@ -61,7 +61,7 @@ public class ProjectGenerationPostProcessorTests
 		ProjectRequestPostProcessor firstPostProcessor() {
 			return new ProjectRequestPostProcessor() {
 				@Override
-				public void postProcessBeforeResolution(ProjectRequest request,
+				public void postProcessBeforeResolution(ProjectRequestSuperClass request,
 						InitializrMetadata metadata) {
 					request.setJavaVersion("1.2");
 					request.setBootVersion("1.2.3.RELEASE");

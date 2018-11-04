@@ -845,7 +845,7 @@ public class ProjectGeneratorTests extends AbstractProjectGeneratorTests {
 		this.projectGenerator.setRequestResolver(new ProjectRequestResolver(
 				Collections.singletonList(new ProjectRequestPostProcessor() {
 					@Override
-					public void postProcessBeforeResolution(ProjectRequest r,
+					public void postProcessBeforeResolution(ProjectRequestSuperClass r,
 							InitializrMetadata m) {
 						r.setBootVersion("1.3.0.M2");
 					}

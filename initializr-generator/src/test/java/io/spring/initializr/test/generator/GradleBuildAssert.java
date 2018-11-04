@@ -16,9 +16,9 @@
 
 package io.spring.initializr.test.generator;
 
-import io.spring.initializr.generator.ProjectRequest;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
+import io.spring.initializr.generator.ProjectRequestSuperClass;
 
 /**
  * Very simple assertions for the gradle build.
@@ -38,7 +38,7 @@ public class GradleBuildAssert {
 	 * @param request the source request
 	 * @return a gradle assert
 	 */
-	public GradleBuildAssert validateProjectRequest(ProjectRequest request) {
+	public GradleBuildAssert validateProjectRequest(ProjectRequestSuperClass request) {
 		return hasVersion(request.getVersion()).hasBootVersion(request.getBootVersion())
 				.hasJavaVersion(request.getJavaVersion());
 	}
