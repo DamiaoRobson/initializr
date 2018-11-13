@@ -363,60 +363,7 @@ public class ProjectGenerator {
 		log.info("Processing request{type=" + request.getType() + ", dependencies="
 				+ dependencyIds);
 
-		if (isWar(request)) {
-			model.put("war", true);
-		}
-
-		// Kotlin supported as of M6
-		final boolean kotlinSupport = VERSION_2_0_0_M6.compareTo(bootVersion) <= 0;
-		model.put("kotlinSupport", kotlinSupport);
-
-		if (isMavenBuild(request)) {
-			model.put("mavenBuild", true);
-			ParentPom parentPom = metadata.getConfiguration().getEnv().getMaven()
-					.resolveParentPom(request.getBootVersion());
-			if (parentPom.isIncludeSpringBootBom()
-					&& !request.getBoms().containsKey("spring-boot")) {
-				request.getBoms().put("spring-boot", metadata.createSpringBootBom(
-						request.getBootVersion(), "spring-boot.version"));
-			}
-
-			model.put("mavenParentGroupId", parentPom.getGroupId());
-			model.put("mavenParentArtifactId", parentPom.getArtifactId());
-			model.put("mavenParentVersion", parentPom.getVersion());
-			model.put("includeSpringBootBom", parentPom.isIncludeSpringBootBom());
-		}
-
-		model.put("repositoryValues", request.getRepositories().entrySet());
-		if (!request.getRepositories().isEmpty()) {
-			model.put("hasRepositories", true);
-		}
-
-		List<Map<String, String>> resolvedBoms = buildResolvedBoms(request);
-		model.put("resolvedBoms", resolvedBoms);
-		ArrayList<Map<String, String>> reversedBoms = new ArrayList<>(resolvedBoms);
-		Collections.reverse(reversedBoms);
-		model.put("reversedBoms", reversedBoms);
-
-		model.put("compileDependencies",
-				filterDependencies(dependencies, Dependency.SCOPE_COMPILE));
-		model.put("runtimeDependencies",
-				filterDependencies(dependencies, Dependency.SCOPE_RUNTIME));
-		model.put("compileOnlyDependencies",
-				filterDependencies(dependencies, Dependency.SCOPE_COMPILE_ONLY));
-		model.put("annotationProcessorDependencies",
-				filterDependencies(dependencies, Dependency.SCOPE_ANNOTATION_PROCESSOR));
-		model.put("providedDependencies",
-				filterDependencies(dependencies, Dependency.SCOPE_PROVIDED));
-		model.put("testDependencies",
-				filterDependencies(dependencies, Dependency.SCOPE_TEST));
-
-		request.getBoms().forEach((k, v) -> {
-			if (v.getVersionProperty() != null) {
-				request.getBuildProperties().getVersions()
-						.computeIfAbsent(v.getVersionProperty(), (key) -> v::getVersion);
-			}
-		});
+		resolveModelExtract(model, metadata, request, bootVersion, dependencies);
 
 		Map<String, String> versions = new LinkedHashMap<>();
 		model.put("buildPropertiesVersions", versions.entrySet());
@@ -480,6 +427,64 @@ public class ProjectGenerator {
 		}
 
 		return model;
+	}
+
+	private void resolveModelExtract(Map<String, Object> model, InitializrMetadata metadata, ProjectRequest request,
+			Version bootVersion, List<Dependency> dependencies) {
+		if (isWar(request)) {
+			model.put("war", true);
+		}
+
+		// Kotlin supported as of M6
+		final boolean kotlinSupport = VERSION_2_0_0_M6.compareTo(bootVersion) <= 0;
+		model.put("kotlinSupport", kotlinSupport);
+
+		if (isMavenBuild(request)) {
+			model.put("mavenBuild", true);
+			ParentPom parentPom = metadata.getConfiguration().getEnv().getMaven()
+					.resolveParentPom(request.getBootVersion());
+			if (parentPom.isIncludeSpringBootBom()
+					&& !request.getBoms().containsKey("spring-boot")) {
+				request.getBoms().put("spring-boot", metadata.createSpringBootBom(
+						request.getBootVersion(), "spring-boot.version"));
+			}
+
+			model.put("mavenParentGroupId", parentPom.getGroupId());
+			model.put("mavenParentArtifactId", parentPom.getArtifactId());
+			model.put("mavenParentVersion", parentPom.getVersion());
+			model.put("includeSpringBootBom", parentPom.isIncludeSpringBootBom());
+		}
+
+		model.put("repositoryValues", request.getRepositories().entrySet());
+		if (!request.getRepositories().isEmpty()) {
+			model.put("hasRepositories", true);
+		}
+
+		List<Map<String, String>> resolvedBoms = buildResolvedBoms(request);
+		model.put("resolvedBoms", resolvedBoms);
+		ArrayList<Map<String, String>> reversedBoms = new ArrayList<>(resolvedBoms);
+		Collections.reverse(reversedBoms);
+		model.put("reversedBoms", reversedBoms);
+
+		model.put("compileDependencies",
+				filterDependencies(dependencies, Dependency.SCOPE_COMPILE));
+		model.put("runtimeDependencies",
+				filterDependencies(dependencies, Dependency.SCOPE_RUNTIME));
+		model.put("compileOnlyDependencies",
+				filterDependencies(dependencies, Dependency.SCOPE_COMPILE_ONLY));
+		model.put("annotationProcessorDependencies",
+				filterDependencies(dependencies, Dependency.SCOPE_ANNOTATION_PROCESSOR));
+		model.put("providedDependencies",
+				filterDependencies(dependencies, Dependency.SCOPE_PROVIDED));
+		model.put("testDependencies",
+				filterDependencies(dependencies, Dependency.SCOPE_TEST));
+
+		request.getBoms().forEach((k, v) -> {
+			if (v.getVersionProperty() != null) {
+				request.getBuildProperties().getVersions()
+						.computeIfAbsent(v.getVersionProperty(), (key) -> v::getVersion);
+			}
+		});
 	}
 
 	private List<Map<String, String>> buildResolvedBoms(ProjectRequest request) {
