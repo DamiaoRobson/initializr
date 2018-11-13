@@ -119,12 +119,12 @@ public class ProjectRequest extends BasicProjectRequest {
 	public void initialize(InitializrMetadata metadata) {
 		BeanWrapperImpl bean = new BeanWrapperImpl(this);
 		metadata.defaults().forEach((key, value) -> {
-			if (bean.isWritableProperty(key)) {
+			if (bean.isWritableProperty(key) && !key.equals("packageName") ) {
 				// We want to be able to infer a package name if none has been
 				// explicitly set
-				if (!key.equals("packageName")) {
-					bean.setPropertyValue(key, value);
-				}
+				
+				bean.setPropertyValue(key, value);
+				
 			}
 		});
 	}
